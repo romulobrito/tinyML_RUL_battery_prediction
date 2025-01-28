@@ -1,4 +1,4 @@
-# Arquivos e diretórios Python
+# Python Directories and Archives
 __pycache__/
 *.py[cod]
 *$py.class
@@ -21,7 +21,7 @@ wheels/
 .installed.cfg
 *.egg
 
-# Ambiente Virtual
+# Virtual Environment
 venv/
 venv_battery/
 ENV/
@@ -30,7 +30,7 @@ ENV/
 .ipynb_checkpoints
 */.ipynb_checkpoints/*
 
-# Arquivos de dados e modelos
+# Data and Model Files
 *.csv
 *.npy
 *.pkl
@@ -40,7 +40,7 @@ ENV/
 *.pt
 *.onnx
 
-# Logs e relatórios
+# Logs and Reports
 *.log
 .coverage
 htmlcov/
@@ -52,20 +52,23 @@ coverage.xml
 *.cover
 .hypothesis/
 
-# IDEs e editores
+# IDEs and Editors
 .idea/
 .vscode/
 *.swp
 *.swo
 *~
 
-# Sistema operacional
+# Operating System
 .DS_Store
 Thumbs.db 
 
-# Arquivos Markdown
+# Markdown Files
 *.md
 
-# Arquivos Jupyter Notebook
+# Jupyter Notebook Files
 teste.ipynb
 tinyml_ecg.ipynb
+
+# Zip Files
+*.zip

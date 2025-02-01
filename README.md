@@ -59,6 +59,11 @@ The current model achieves:
 - MSE of 0.0026 for the Student model (quantized)
 - Significant model size reduction after quantization
 
+Detailed evaluation metrics include:
+- Overall MSE, MAE, and R² scores
+- Performance analysis by RUL ranges (0-100, 100-500, 500-1000)
+- Comprehensive model comparison between Teacher and Student models
+
 ## 🤝 Contributing
 
 Contributions are welcome! To contribute:

@@ -64,7 +64,7 @@ coverage.xml
 Thumbs.db 
 
 # Markdown Files
-*.md
+RUL_battery.md
 
 # Jupyter Notebook Files
 teste.ipynb
@@ -72,3 +72,5 @@ tinyml_ecg.ipynb
 
 # Zip Files
 *.zip
+
+

@@ -5,7 +5,7 @@ import pandas as pd
 
 def evaluate_model(model, test_loader, criterion, scaler_y=None):
     """
-    Avalia o modelo com métricas específicas baseadas na AED
+    Evaluate the model with specific metrics based on AED
     """
     model.eval()
     predictions = []
@@ -32,12 +32,11 @@ def evaluate_model(model, test_loader, criterion, scaler_y=None):
     predictions = np.array(predictions, dtype=np.float32)
     actuals = np.array(actuals, dtype=np.float32)
     
-    # Descale predictions se necessário
     if scaler_y is not None:
         predictions = scaler_y.inverse_transform(predictions.reshape(-1, 1)).flatten()
         actuals = scaler_y.inverse_transform(actuals.reshape(-1, 1)).flatten()
     
-    # 1. Métricas Gerais
+    # General Metrics
     metrics = {
         'overall': {
             'mse': float(mean_squared_error(actuals, predictions)),
@@ -47,7 +46,7 @@ def evaluate_model(model, test_loader, criterion, scaler_y=None):
         }
     }
     
-    # 2. Métricas por Faixa de RUL (baseado na AED)
+    # Metrics by RUL bin (based on AED)
     rul_bins = [0, 10, 100, 500, 1000, float('inf')]
     rul_labels = ['0-10', '11-100', '101-500', '501-1000', '>1000']
     
@@ -70,7 +69,7 @@ def evaluate_model(model, test_loader, criterion, scaler_y=None):
                 'mean_error': float((range_preds - range_actuals).mean())
             }
     
-    # 3. Análise de Erros Extremos (baseado nos outliers identificados)
+    # Extreme Error Analysis (based on identified outliers)
     error = predictions - actuals
     q1 = np.percentile(error, 25)
     q3 = np.percentile(error, 75)
@@ -85,22 +84,21 @@ def evaluate_model(model, test_loader, criterion, scaler_y=None):
         'max_underestimation': float(error.min())
     }
     
-    # Imprimir resultados detalhados
-    print("\n=== Métricas Gerais ===")
+    print("\n=== General Metrics ===")
     print(f"MSE: {metrics['overall']['mse']:.4f}")
     print(f"MAE: {metrics['overall']['mae']:.4f}")
     print(f"R²: {metrics['overall']['r2']:.4f}")
     
     print("\n=== Métricas por Faixa de RUL ===")
     for rul_range, range_metrics in metrics['by_rul_range'].items():
-        print(f"\nFaixa {rul_range}:")
-        print(f"Amostras: {range_metrics['samples']}")
+        print(f"\nRange {rul_range}:")
+        print(f"Samples: {range_metrics['samples']}")
         print(f"MAE: {range_metrics['mae']:.4f}")
-        print(f"Erro Médio: {range_metrics['mean_error']:.4f}")
+        print(f"Mean Error: {range_metrics['mean_error']:.4f}")
     
-    print("\n=== Análise de Erros ===")
-    print(f"Erro Médio: {metrics['error_analysis']['mean_error']:.4f}")
-    print(f"Desvio Padrão do Erro: {metrics['error_analysis']['std_error']:.4f}")
-    print(f"% de Predições Outliers: {metrics['error_analysis']['outlier_predictions_pct']:.2f}%")
+    print("\n=== Error Analysis ===")
+    print(f"Mean Error: {metrics['error_analysis']['mean_error']:.4f}")
+    print(f"Standard Deviation of Error: {metrics['error_analysis']['std_error']:.4f}")
+    print(f"% of Outlier Predictions: {metrics['error_analysis']['outlier_predictions_pct']:.2f}%")
     
     return metrics
